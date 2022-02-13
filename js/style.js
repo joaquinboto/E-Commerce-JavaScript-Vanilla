@@ -27,8 +27,7 @@ function sendFuncion() {
     carrito.appendChild(infoProducto)
 }
 
-const hola = document.createElement ("div")
-hola.innerHTML = `hola`
+
 
 
 
