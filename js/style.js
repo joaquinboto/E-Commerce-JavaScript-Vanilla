@@ -1,34 +1,14 @@
-const carrito = document.querySelector(".add-tocart")
-let contenedor = document.querySelector(".div-contenedor")
+const addToCard = document.querySelectorAll(".btn-cart")
+console.log(addToCard);
 
-function load() {
-    contenedor.addEventListener('click', presionar)
+addToCard.forEach (addToCardBtn => {
+    addToCardBtn.addEventListener("click", addCard)
+})
+
+
+
+function addCard (event) {
+    const boton = event.target
+    console.log(boton);
+
 }
-load()
-
-function presionar(e) {
-    e.preventDefault()
-    if (e.target.classList.contains('btn-cart')) {
-        console.log(e.target);
-    }
-    sendFuncion()
-}
-
-function sendFuncion() {
-    const infoProducto = document.createElement("div")
-    infoProducto.innerHTML = ` <div class="dv-img-producto">
-    <img src="./assets/conjuntobasico.jpeg" alt="">
-    </div>
-    <div class="product-item-details">
-      <h5>Conjunto Basico</h5>
-      <h6>$8000</h6>
-      <button class="btn-cart">ADD TO CART</button>
-    </div>`
-    carrito.appendChild(infoProducto)
-}
-
-
-
-
-
-
