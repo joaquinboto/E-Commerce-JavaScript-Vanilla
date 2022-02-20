@@ -1,47 +1,65 @@
-let allContainerCart = document.querySelector('.div-contenedor');
-let containerBuyCart = document.querySelector('.carrito');
+//DOM
+let nombreProducto = document.querySelector(".producto-title")
+let precioProducto = document.querySelector(".precio-producto")
+const btnProducto = document.querySelector(".btnProducto")
+let imagenProducto = document.querySelector(".imagen-producto")
+let divCarrito = document.querySelector(".carrito")
 
 
-//Array
-const arrayProductos = []
-const arrayProductosCopia = Object.assign([] , arrayProductos )
-//Funciones
-loadEventos()
-function loadEventos() {
-    allContainerCart.addEventListener("click",addProducto)
-}
+console.log(btnProducto);
+//EVENTOS
+btnProducto.addEventListener("click", function(e) {
+    e.preventDefault();
+    if (e.target.classList.contains("btnProducto")) {
+        let precioProducto = document.querySelector(".precio-producto").textContent
+        let imagenProducto = document.querySelector(".imagen-producto").src
+        let nombreProducto = document.querySelector(".producto-title").textContent
+        const producto1 = new Product ({imagen: imagenProducto , nombre: nombreProducto , precio: precioProducto, id: 1})
+        const ui = new UI ()
+        ui.addProduct(producto1)
+    }
+})
 
-function addProducto(e) {
-    e.preventDefault()
-    if (e.target.classList.contains("btn-add-cart")) {
-        const selectProduct = e.target.parentElement
-        readTheContent(selectProduct)
+//CLASE DE PRODUCTO
+class Product {
+    
+    constructor(producto) {
+        this.image= producto.imagen
+        this.nombre= producto.nombre
+        this.precio= producto.precio
+        this.id = producto.id
     }
 }
 
-function readTheContent(producto) {
-    const arrayProductos = {
-        image: producto.querySelector("div img").src,
-        title: producto.querySelector("div h5").textContent,
-        price: producto.querySelector("div h6").textContent,
-        id: producto.querySelector("div a").getAttribute("data-id"),
-        cantidad: 1,
+class UI {
+
+    addProduct(producto1) {
+        const row = document.createElement("div")
+        row.innerHTML = ` <div class="producto3">
+        <img class="imagen-producto" src=${producto1.imagen} alt="">
+        <h5 class="producto-title">${producto1.nombre}</h5>
+        <h6 class="precio-producto">${producto1.precio}</h6>
+        <button class="btn-add-cart">AGREGAR</button>
+    </div>`
+        divCarrito.appendChild(row)
     }
-    const arrayProductosCopia = Object.assign([] , arrayProductos )
-    console.log(arrayProductosCopia);
-    loadHTML()
+
 }
 
-function loadHTML() {
-    arrayProductosCopia.forEach(producto => {
-        console.log(producto);
-        const row = document.createElement("div");
-        row.innerHTML = `
-        <img class="imagen-producto" ${image.product} alt="">
-                    <h5>${title.producto}</h5>
-                    <h6 class="precio-producto">${price.producto}</h6>
-                    <a href="" data-id="${id.producto}" class="btn-add-cart">ADD TO CART</a>
-                    <p>${cantidad}</p>`
-        containerBuyCart.appendChild(row);
-    });
-}
+const producto1 = new Product ({imagen: imagenProducto , nombre: nombreProducto , precio: precioProducto, id: 1})
+
+
+//FUNCION RECIBIR INFORMACION
+
+
+//AGREGAR PRODUCTO
+
+
+//FUNCION ENVIAR AL CARRITO
+
+
+
+
+
+
+
