@@ -38,7 +38,6 @@ btnProducto.forEach(element => {
 divCarrito.addEventListener('click' , function (e) {
     const ui = new UI ()
     ui.deleteProduct(e.target)
-    ui.sumarProducto()
     ui.restarPrdocuto()
 })
 
@@ -59,7 +58,7 @@ class UI {
 
     //AGREGAR PRODUCTO
     addProduct(productosVarios) {
-      this.clearHTML ();
+    //   this.clearHTML ();
       const row = document.createElement("div")
       row.innerHTML = `<div class="producto1 row d-flex flex-row">
       <div class="col-3 d-flex flex-column">
@@ -105,9 +104,9 @@ class UI {
     }
 
     //LIMPIAR HTML PARA QUE NO SE DUPLIQUE
-    clearHTML () {
-      divCarrito.innerHTML = ''
-    }
+    // clearHTML () {
+    //   divCarrito.innerHTML = ''
+    // }
 }
 
 //OBJETOS
