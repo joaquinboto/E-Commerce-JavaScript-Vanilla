@@ -15,6 +15,14 @@ const tomarInfo = (e) => {
     let imagenProducto = productos.querySelector(".imagen-producto").src
     let nombreProducto = productos.querySelector(".producto-title").textContent
 
+    function remplazar (precioProducto) {
+        let precioTotal = Number(precioProducto.replace('Precio $' , ''));
+        arrayPrecio.push(precioTotal)
+        console.log(arrayPrecio);
+    }
+
+    remplazar(precioProducto)
+
     //objetos y metodos en el evento
     const productosVarios = new Product ({imagen: imagenProducto , nombre: nombreProducto , precio: precioProducto, value: 1})
     const ui = new UI ()
@@ -31,6 +39,7 @@ divCarrito.addEventListener('click' , function (e) {
     const ui = new UI ()
     ui.deleteProduct(e.target)
     ui.sumarProducto()
+    ui.restarPrdocuto()
 })
 
 //CLASE DE PRODUCTO
@@ -82,15 +91,17 @@ class UI {
     }
     
     //SUMA DEL TOTAL
-    sumarProducto(precioProducto , element) {
-        let precioTotal = Number(precioProducto.replace('Precio $' , ''));
-        arrayPrecio.push(precioTotal)
+    sumarProducto() {
         let total = arrayPrecio.reduce((acum , item) => {
             return acum = acum + item
         })
         
         let rowCarrito = document.querySelector(".price")
         rowCarrito.innerHTML = `<p>Total: <strong>${total}</strong></p>`
+    }
+
+    restarPrdocuto () {
+
     }
 
     //LIMPIAR HTML PARA QUE NO SE DUPLIQUE
