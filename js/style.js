@@ -14,7 +14,6 @@ const tomarInfo = (e) => {
     let precioProducto = productos.querySelector(".precio-producto").textContent
     let imagenProducto = productos.querySelector(".imagen-producto").src
     let nombreProducto = productos.querySelector(".producto-title").textContent
-
     function remplazar (precioProducto) {
         let precioTotal = Number(precioProducto.replace('Precio $' , ''));
         arrayPrecio.push(precioTotal)
@@ -38,7 +37,6 @@ btnProducto.forEach(element => {
 divCarrito.addEventListener('click' , function (e) {
     const ui = new UI ()
     ui.deleteProduct(e.target)
-    ui.restarProducto()
 })
 
 //CLASE DE PRODUCTO
@@ -58,34 +56,35 @@ class UI {
 
     //AGREGAR PRODUCTO
     addProduct(productosVarios) {
-    //   this.clearHTML ();
       const row = document.createElement("div")
-      row.innerHTML = `<div class="producto2 row d-flex flex-row">
-      <div class="col-3 d-flex flex-column">
-      <strong>Producto:</strong>
-      <div class="d-flex align-items-center justify-content-between">
-      <img class="imagen-producto w-25" src=${productosVarios.image} alt="">
-      <h5 class="producto-title">${productosVarios.nombre}</h5>
+      row.className = "producto2"
+      row.innerHTML = `<!--DIV IMAGEN Y NOMBRE -->
+      <div class="mockup1">
+            <strong>PRODUCTO:</strong>
+            <img class="imagen-producto" src="${productosVarios.image}" alt="">
+            <h5 class="producto-title">${productosVarios.nombre}</h5>
       </div>
-      </div>
-      <div class="col-3 d-flex justify-content-center align-items-center">
-      <h6 class="precio-producto">${productosVarios.precio}</h6>
-      </div>
-      <div class="col-3">
-      <div class="d-flex justify-content-center">
-      <input style="width:40px" class="mx-3" type="number" value="1" class="inputControl">
-      <a href="#" class="btn btn-danger my-3" name="delete"> Delete <a/>
-      </div>
-      </div>
-      </div>`
+  
+            <!--DIV PRECIO-->
+            <div class="mockup2">
+              <strong class="precio-producto">${productosVarios.precio}</strong>
+            </div>
+  
+            <!--DIV INPUT Y BOTON-->
+                  <div class="mockup3">
+                      <input class="inputControl mx-3" style="width:40px" type="number" value="1" >
+                      <a href="#" class="btn btn-danger" name="delete"> Delete <a/>
+                  </div>`
       divCarrito.appendChild(row)
+      
+     
       
     }
 
     //BORRAR PRODUCTO
     deleteProduct(element) {
         if (element.name === 'delete' ) {
-            element.parentElement.parentElement.parentElement.remove();
+            element.parentElement.parentElement.remove();
             console.log(element);
         }
     }
@@ -97,16 +96,14 @@ class UI {
         )
         let rowCarrito = document.querySelector(".price")
         rowCarrito.innerHTML = `<p>Total: <strong>${total}</strong></p>`
+       
     }
 
     restarProducto () {
       
     }
 
-    //LIMPIAR HTML PARA QUE NO SE DUPLIQUE
-    // clearHTML () {
-    //   divCarrito.innerHTML = ''
-    // }
+
 }
 
 //OBJETOS
