@@ -14,6 +14,8 @@ const tomarInfo = (e) => {
     let precioProducto = productos.querySelector(".precio-producto").textContent
     let imagenProducto = productos.querySelector(".imagen-producto").src
     let nombreProducto = productos.querySelector(".producto-title").textContent
+
+
     function remplazar (precioProducto) {
         let precioTotal = Number(precioProducto.replace('Precio $' , ''));
         arrayPrecio.push(precioTotal)
@@ -85,7 +87,6 @@ class UI {
     deleteProduct(element) {
         if (element.name === 'delete' ) {
             element.parentElement.parentElement.remove();
-            console.log(element);
         }
     }
     

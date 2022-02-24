@@ -17,12 +17,11 @@ function eventoBoton (evento) {
     const nombre = productos.querySelector(".producto-title").textContent
     const imagen = productos.querySelector(".imagen-producto").src
     const precio = productos.querySelector(".precio-producto").textContent
-    updateCarrito (nombre, imagen , precio)
+    updateCarrito (nombre, imagen , precio) //buscando datos de producto
 }
 
 //--------------PINTAR PRODUCTOS-----------------
 function updateCarrito (nombre , imagen, precio){
- 
     const row = document.createElement("div");
     row.className = "producto2"
     row.innerHTML = 
@@ -57,7 +56,7 @@ function updateCarrito (nombre , imagen, precio){
     
       row.querySelector(".inputControl").addEventListener('change' , (e) => {
         const input = e.target
-        input.value <= 0 ? (input.value = 1) : null
+        input.value <= 0 ? (input.value = 1) : null;
         sumarProducto()//SUMANDO INPUT
       })
 
