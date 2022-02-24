@@ -72,9 +72,9 @@ class UI {
       <h6 class="precio-producto">${productosVarios.precio}</h6>
       </div>
       <div class="col-3">
-      <div>
-      <input style="width:40px" class="m-4" type="number" value="1" class="inputControl">
-      <a href="#" class="btn btn-danger" name="delete"> Delete <a/>
+      <div class="d-flex justify-content-center">
+      <input style="width:40px" class="mx-3" type="number" value="1" class="inputControl">
+      <a href="#" class="btn btn-danger my-3" name="delete"> Delete <a/>
       </div>
       </div>
       </div>`

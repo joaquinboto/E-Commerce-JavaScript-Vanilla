@@ -23,26 +23,27 @@ function eventoBoton (evento) {
 function updateCarrito (nombre , imagen, precio){
  
     const row = document.createElement("div");
-    row.className = "divBien"
+    row.className = "producto2"
     row.innerHTML = 
-    `<div class="producto2 row d-flex flex-row">
-    <div class="col-3 d-flex flex-column">
-    <strong>Producto:</strong>
-    <div class="d-flex align-items-center justify-content-between">
-    <img class="imagen-producto w-25" src=${imagen} alt="">
-    <h5 class="producto-title">${nombre}</h5>
+    `
+    <!--DIV IMAGEN Y NOMBRE -->
+    <div class="mockup1">
+          <strong>PRODUCTO:</strong>
+          <img class="imagen-producto" src="${imagen}" alt="">
+          <h5 class="producto-title">${nombre}</h5>
     </div>
-    </div>
-    <div class="col-3 d-flex justify-content-center align-items-center">
-    <h6 class="precio-producto">${precio}</h6>
-    </div>
-    <div class="col-3">
-    <div>
-    <input class="inputControl" style="width:40px" class="m-4" type="number" value="1" >
-    <a href="#" class="btn btn-danger" name="delete"> Delete <a/>
-    </div>
-    </div>
-    </div>`
+
+          <!--DIV PRECIO-->
+          <div class="mockup2">
+            <strong class="precio-producto">${precio}</strong>
+          </div>
+
+          <!--DIV INPUT Y BOTON-->
+                <div class="mockup3">
+                    <input class="inputControl mx-3" style="width:40px" type="number" value="1" >
+                    <a href="#" class="btn btn-danger" name="delete"> Delete <a/>
+                </div>
+  `
     divCarrito.appendChild(row)
     
     

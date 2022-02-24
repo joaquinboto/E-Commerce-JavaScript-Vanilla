@@ -68,23 +68,32 @@
 }
 
 .imagen-producto {
-  width: 100px;
+  width: 25%;
 }
 
 .producto2 {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  margin-top: 20px;
 }
-.producto2 img {
-  width: 50%;
+.producto2 .mockup1 {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 550px;
 }
-.producto2 .btn-cart {
-  border-radius: 8px;
-  padding: 3px;
-  background-color: black;
-  color: white;
+.producto2 .mockup2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 550px;
+}
+.producto2 .mockup3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 550px;
 }
 
 /*# sourceMappingURL=style.css.map */
