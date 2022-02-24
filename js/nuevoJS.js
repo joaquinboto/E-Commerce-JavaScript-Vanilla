@@ -4,8 +4,9 @@ let precioProducto = document.querySelector(".precio-producto")
 let btnProducto = document.querySelectorAll(".btnProducto")
 let imagenProducto = document.querySelector(".imagen-producto")
 let divCarrito = document.querySelector(".carrito")
-//EVENTOS
 
+
+//------------------EVENTOS------------------
 btnProducto.forEach(element => {
         element.addEventListener("click", eventoBoton);}
         )
@@ -19,7 +20,7 @@ function eventoBoton (evento) {
     updateCarrito (nombre, imagen , precio)
 }
 
-//PINTAR PRODUCTOS
+//--------------PINTAR PRODUCTOS-----------------
 function updateCarrito (nombre , imagen, precio){
  
     const row = document.createElement("div");
@@ -47,7 +48,7 @@ function updateCarrito (nombre , imagen, precio){
     divCarrito.appendChild(row)
     
     
-    //EVENTO BORRAR PRODUCTO Y PRECIO
+    //------------EVENTO BORRAR PRODUCTO Y PRECIO---------------------
     row.querySelector(".btn").addEventListener("click", (e) => {
         const botonDelete = e.target
         botonDelete.closest(".producto2").remove();
@@ -61,10 +62,10 @@ function updateCarrito (nombre , imagen, precio){
       })
 
     
-    sumarProducto()//SUMAR PRECIO
+    sumarProducto()//---------SUMAR PRECIO----------
 }
 
-//SUMA DE PRODUCTOS
+//-------------SUMA DE PRODUCTOS-----------
 function sumarProducto() {
     let total = 0 
     let precioTotal = document.querySelector(".price")
