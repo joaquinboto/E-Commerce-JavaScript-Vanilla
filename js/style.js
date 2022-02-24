@@ -60,7 +60,7 @@ class UI {
     addProduct(productosVarios) {
     //   this.clearHTML ();
       const row = document.createElement("div")
-      row.innerHTML = `<div class="producto1 row d-flex flex-row">
+      row.innerHTML = `<div class="producto2 row d-flex flex-row">
       <div class="col-3 d-flex flex-column">
       <strong>Producto:</strong>
       <div class="d-flex align-items-center justify-content-between">
