@@ -38,7 +38,7 @@ btnProducto.forEach(element => {
 divCarrito.addEventListener('click' , function (e) {
     const ui = new UI ()
     ui.deleteProduct(e.target)
-    ui.restarPrdocuto()
+    ui.restarProducto()
 })
 
 //CLASE DE PRODUCTO
@@ -86,21 +86,21 @@ class UI {
     deleteProduct(element) {
         if (element.name === 'delete' ) {
             element.parentElement.parentElement.parentElement.remove();
+            console.log(element);
         }
     }
     
     //SUMA DEL TOTAL
     sumarProducto() {
-        let total = arrayPrecio.reduce((acum , item) => {
-            return acum = acum + item
-        })
-        
+        let total = arrayPrecio.reduce((acum , item) => 
+            acum = acum + item , 0
+        )
         let rowCarrito = document.querySelector(".price")
         rowCarrito.innerHTML = `<p>Total: <strong>${total}</strong></p>`
     }
 
-    restarPrdocuto () {
-
+    restarProducto () {
+      
     }
 
     //LIMPIAR HTML PARA QUE NO SE DUPLIQUE
