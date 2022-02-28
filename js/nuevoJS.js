@@ -25,9 +25,12 @@ function buscarObjeto (productos) {
     value : productos.querySelector(".btnProducto").value
   }
 
+  
   const existe = arreglo.some ((product) => product.nombre === infoProduct.nombre )
-  if (existe) {
-    const nuevoArreglo = arreglo.map ((e) => {
+
+  //TRUE O FALSE
+  if (existe)  {
+      const nuevoArreglo = arreglo.map ((e) => {
       if (e.nombre === infoProduct.nombre) {
         e.value++
         return e
@@ -36,10 +39,12 @@ function buscarObjeto (productos) {
         return e
       }
     })
-    arreglo = [... nuevoArreglo]
-  }else {
-    arreglo = [...arreglo , infoProduct]
+    arreglo = [... nuevoArreglo] //TRUE 
   }
+      else {
+        arreglo = [...arreglo , infoProduct] //FALSE
+        }
+        
   updateCarrito (arreglo) //buscando datos de producto
 }
 
@@ -75,19 +80,20 @@ function updateCarrito (arreglo){
     //------------EVENTO BORRAR PRODUCTO Y PRECIO---------------------
     row.querySelector(".btn").addEventListener("click", (e) => {
         const botonDelete = e.target
-        botonDelete.closest(".producto2").remove();
-        sumarProducto()
+        botonDelete.closest(".producto2").remove(); 
+        sumarProducto()//--------RESTANDO PRECIO--------
     })
     
       row.querySelector(".inputControl").addEventListener('change' , (e) => {
         const input = e.target
         input.value <= 0 ? (input.value = 1) : null;
-        sumarProducto()//SUMANDO INPUT
+        sumarProducto()//------SUMANDO INPUT---------
       })
   })
     sumarProducto()//---------SUMAR PRECIO----------
 }
 
+//FORMATEANDO HTML
 function clear() {
   divCarrito.innerHTML = ''
 }
