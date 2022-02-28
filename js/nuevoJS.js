@@ -25,7 +25,7 @@ function buscarObjeto (productos) {
     value : productos.querySelector(".btnProducto").value
   }
 
-  
+  localStorage.setItem("infoProduct", infoProduct)
   const existe = arreglo.some ((product) => product.nombre === infoProduct.nombre )
 
   //TRUE O FALSE
@@ -107,7 +107,7 @@ function sumarProducto() {
         const cantidad = Number(items.querySelector(".inputControl").value)
         total = total + elementoPrecio * cantidad
     })
-    precioTotal.innerHTML = `$${total}`
+    precioTotal.innerHTML = `Total $${total}`
 }
 
 
