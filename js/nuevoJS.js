@@ -115,7 +115,7 @@ function updateCarrito (arreglo){
     
       row.querySelector(".inputControl").addEventListener('change' , (e) => {
         const input = e.target
-        input.value <= 0 ? (input.value = 1) : null;
+        input.value <= 0 ? input.value = 1 : null;
         sumarProducto()//------SUMANDO INPUT---------
       })
   })
