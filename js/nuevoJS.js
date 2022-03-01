@@ -9,14 +9,27 @@ let arreglo = []
 //------------------EVENTOS------------------
 btnProducto.forEach(element => {
         element.addEventListener("click", eventoBoton);}
+        
         )
 
 function eventoBoton (evento) {
     let boton = evento.target
     const productos = boton.closest(".producto1")
     buscarObjeto(productos)
+    Toastify({
+      text: "Añadido al carrito",
+      duration: 700,
+      gravity: 'bottom',
+      position: 'right',
+      style: {
+        background: "black",
+      },
+  }).showToast();
+
 }
 
+
+//FUNCIONES//
 function buscarObjeto (productos) {
   const infoProduct = {
     nombre : productos.querySelector(".producto-title").textContent,
@@ -25,7 +38,6 @@ function buscarObjeto (productos) {
     value : productos.querySelector(".btnProducto").value
   }
 
-  localStorage.setItem("infoProduct", infoProduct)
   const existe = arreglo.some ((product) => product.nombre === infoProduct.nombre )
 
   //TRUE O FALSE
@@ -79,8 +91,25 @@ function updateCarrito (arreglo){
 
     //------------EVENTO BORRAR PRODUCTO Y PRECIO---------------------
     row.querySelector(".btn").addEventListener("click", (e) => {
-        const botonDelete = e.target
-        botonDelete.closest(".producto2").remove(); 
+        const botonDelete = e.target 
+        botonDelete.closest(".producto2").remove();  //BORAR PRODUCTO
+        Swal.fire({
+          title: 'Estas seguro?',
+          text: "",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, eliminar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              'Articulo eliminado',
+              'Eliminaste tu producto',
+              'success'
+            )
+          }
+        })
         sumarProducto()//--------RESTANDO PRECIO--------
     })
     
