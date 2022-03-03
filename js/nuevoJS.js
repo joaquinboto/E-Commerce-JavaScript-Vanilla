@@ -3,8 +3,9 @@ let nombreProducto = document.querySelector(".producto-title")
 let precioProducto = document.querySelector(".precio-producto")
 let btnProducto = document.querySelectorAll(".btnProducto")
 let imagenProducto = document.querySelector(".imagen-producto")
-let divCarrito = document.querySelector(".carrito")
+let divCarrito = document.querySelector(".offcanvas-body")
 let arreglo = []
+
 
 //------------------EVENTOS------------------
 btnProducto.forEach(element => {
@@ -38,6 +39,7 @@ function buscarObjeto (productos) {
     value : productos.querySelector(".btnProducto").value
   }
 
+
   const existe = arreglo.some ((product) => product.nombre === infoProduct.nombre )
 
   //TRUE O FALSE
@@ -66,26 +68,23 @@ function updateCarrito (arreglo){
   arreglo.forEach(productosVarios => {
     const {nombre , imagen , precio , value} = productosVarios
     const row = document.createElement("div");
+    console.log(nombre);
     row.className = "producto2"
     row.innerHTML = 
-    `
-    <!--DIV IMAGEN Y NOMBRE -->
-    <div class="mockup1">
-          <strong>PRODUCTO:</strong>
-          <img class="imagen-producto" src="${imagen}" alt="">
+    ` <div class="mockup1">
+        <img class="imagen-producto" src="${imagen}" alt="">
+      </div>
+      <!--DIV PRECIO-->
+      <div class="mockup2">
           <h5 class="producto-title">${nombre}</h5>
-    </div>
-
-          <!--DIV PRECIO-->
-          <div class="mockup2">
-            <strong class="precio-producto">${precio}</strong>
-          </div>
-
-          <!--DIV INPUT Y BOTON-->
-                <div class="mockup3">
-                    <input class="inputControl mx-3" style="width:40px" type="number" value="${value}" >
-                    <a href="#" class="btn btn-danger" name="delete"> Delete <a/>
-                </div>
+          <strong class="precio-producto">${precio}</strong>
+        </div>
+        <!--DIV INPUT Y BOTON-->
+              <div class="mockup3">
+                  <input class="inputControl mx-3" style="width:40px" type="number" value="${value}">
+                  <a href="#" class="btn btn-danger" name="delete">X<a/>
+              </div>
+   
   `
     divCarrito.appendChild(row)
 
