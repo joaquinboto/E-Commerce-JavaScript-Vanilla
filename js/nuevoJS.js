@@ -5,38 +5,45 @@ let btnProducto = document.querySelectorAll(".btnProducto")
 let imagenProducto = document.querySelector(".imagen-producto")
 let divCarrito = document.querySelector(".offcanvas-body")
 let arreglo = []
+let containerGrid = document.querySelector(".grid-container")
 
 
-//------------------EVENTOS------------------
-btnProducto.forEach(element => {
-        element.addEventListener("click", eventoBoton);}
-        
-        )
 
-function eventoBoton (evento) {
-    let boton = evento.target
-    const productos = boton.closest(".producto1")
-    buscarObjeto(productos)
-    Toastify({
-      text: "Añadido al carrito",
-      duration: 700,
-      gravity: 'bottom',
-      position: 'right',
-      style: {
-        background: "black",
-      },
-  }).showToast();
+//------------------JSON------------------
 
+const insertarProductos = () => {
+  return fetch('productos.json')
 }
+insertarProductos()
+.then(busqueda => busqueda.json())
+.then(resultado => resultado.forEach(product => {
+  let row = document.createElement('div')
+  row.classList.add('producto')
+  row.innerHTML = `
+  <img class="imagenProducto" src="${product.imagen}" alt="">
+  <strong class="nombreProducto">${product.nombre}</strong>
+  <strong class="precioProducto">Precio: $${product.precio}</strong>
+  <button class="btn btn-dark">
+  <a class="btnProducto" href="">Agregar al carrito</a>
+  </button>`
+  containerGrid.appendChild(row)
+
+  //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
+  let btnAgregar = row.querySelector(".btnProducto")
+  btnAgregar.addEventListener('click', buscarObjeto)
+  })
+)
 
 
 //FUNCIONES//
-function buscarObjeto (productos) {
-  const infoProduct = {
-    nombre : productos.querySelector(".producto-title").textContent,
-    imagen : productos.querySelector(".imagen-producto").src,
-    precio : productos.querySelector(".precio-producto").textContent,
-    value : productos.querySelector(".btnProducto").value
+function buscarObjeto (e) {
+  e.preventDefault()
+  let boton = e.target.parentElement.parentElement
+  let infoProduct = {
+      nombre: boton.querySelector(".nombreProducto").textContent,
+      imagen: boton.querySelector(".imagenProducto").src,
+      precio: boton.querySelector(".precioProducto").textContent,
+      cantidad: 1
   }
 
 
@@ -66,53 +73,45 @@ function buscarObjeto (productos) {
 function updateCarrito (arreglo){
   clear()
   arreglo.forEach(productosVarios => {
-    const {nombre , imagen , precio , value} = productosVarios
-    const row = document.createElement("div");
-    console.log(nombre);
-    row.className = "producto2"
-    row.innerHTML = 
-    ` <div class="mockup1">
-        <img class="imagen-producto" src="${imagen}" alt="">
-      </div>
-      <!--DIV PRECIO-->
-      <div class="mockup2">
-          <h5 class="producto-title">${nombre}</h5>
-          <strong class="precio-producto">${precio}</strong>
-        </div>
-        <!--DIV INPUT Y BOTON-->
-              <div class="mockup3">
-                  <input class="inputControl mx-3" style="width:40px" type="number" value="${value}">
-                  <a href="#" class="btn btn-danger" name="delete">X<a/>
-              </div>
-   
-  `
-    divCarrito.appendChild(row)
+    const {nombre , imagen , precio , cantidad} = productosVarios
+        let rowCarrito = document.createElement('div')
+        rowCarrito.classList.add('productoCarrito')
+        rowCarrito.innerHTML = `
+                <img class="imagenProductoCarrito" src="${imagen}" alt="">
+                <strong class="nombreProductoCarrito">${nombre}</strong>
+                <strong class="precioProducto">${precio}</strong>
+                <input class="inputControl mx-3" style="width:40px" type="number" value="${cantidad}">
+                <button class="btn btn-dark">
+                    <a class="btnCarrito" name="delete" href="">X</a>
+                </button>
+        `
+        divCarrito.prepend(rowCarrito)
 
     //------------EVENTO BORRAR PRODUCTO Y PRECIO---------------------
-    row.querySelector(".btn").addEventListener("click", (e) => {
+    rowCarrito.querySelector(".btn").addEventListener("click", (e) => {
         const botonDelete = e.target 
-        botonDelete.closest(".producto2").remove();  //BORAR PRODUCTO
-        Swal.fire({
-          title: 'Estas seguro?',
-          text: "",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Si, eliminar'
-        }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire(
-              'Articulo eliminado',
-              'Eliminaste tu producto',
-              'success'
-            )
-          }
-        })
+        botonDelete.closest(".productoCarrito").remove();  //BORAR PRODUCTO
+        // Swal.fire({
+        //   title: 'Estas seguro?',
+        //   text: "",
+        //   icon: 'warning',
+        //   showCancelButton: true,
+        //   confirmButtonColor: '#3085d6',
+        //   cancelButtonColor: '#d33',
+        //   confirmButtonText: 'Si, eliminar'
+        // }).then((result) => {
+        //   if (result.isConfirmed) {
+        //     Swal.fire(
+        //       'Articulo eliminado',
+        //       'Eliminaste tu producto',
+        //       'success'
+        //     )
+        //   }
+        // })
         sumarProducto()//--------RESTANDO PRECIO--------
     })
     
-      row.querySelector(".inputControl").addEventListener('change' , (e) => {
+      rowCarrito.querySelector(".inputControl").addEventListener('change' , (e) => {
         const input = e.target
         input.value <= 0 ? input.value = 1 : null;
         sumarProducto()//------SUMANDO INPUT---------
@@ -129,9 +128,10 @@ function clear() {
 function sumarProducto() {
     let total = 0 
     let precioTotal = document.querySelector(".price")
-    const items = document.querySelectorAll(".producto2")
+    const items = document.querySelectorAll(".productoCarrito")
     items.forEach (items => {
-        let elementoPrecio = Number(items.querySelector(".precio-producto").textContent.replace("Precio $" , ""))
+        let elementoPrecio = Number(items.querySelector(".precioProducto").textContent.replace("Precio: $" , ''))
+        console.log(elementoPrecio);
         const cantidad = Number(items.querySelector(".inputControl").value)
         total = total + elementoPrecio * cantidad
     })

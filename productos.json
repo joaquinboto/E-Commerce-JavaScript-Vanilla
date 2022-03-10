@@ -1,0 +1,50 @@
+[
+    {
+        "nombre" : "Conjunto",
+        "imagen" : "http://127.0.0.1:5500/assets/conjuntobasico.jpeg",
+        "precio" : "5000",
+        "cantidad" : 1
+    },
+    {
+        "nombre" : "Pantalon",
+        "imagen" : "http://127.0.0.1:5500/assets/zapatillas.jpeg",
+        "precio" : "7700",
+        "cantidad" : 1
+    },
+    {
+        "nombre" : "Saco",
+        "imagen" : "http://127.0.0.1:5500/assets/saco.jpeg",
+        "precio" : "1200",
+        "cantidad" : 1
+    },
+    {
+        "nombre" : "Remera",
+        "imagen" : "http://127.0.0.1:5500/assets/remeraroja.webp",
+        "precio" : "6050",
+        "cantidad" : 1
+    },
+    {
+        "nombre" : "Jean",
+        "imagen" : "https://images.pexels.com/photos/4173695/pexels-photo-4173695.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "precio" : "300",
+        "cantidad" : 1
+    },
+    {
+        "nombre" : "Campera",
+        "imagen" : "https://images.pexels.com/photos/4922976/pexels-photo-4922976.jpeg?cs=srgb&dl=pexels-ekaterina-belinskaya-4922976.jpg&fm=jpg",
+        "precio" : "3000",
+        "cantidad" : 1
+    },
+    {
+        "nombre" : "Gorra",
+        "imagen" : "https://images.pexels.com/photos/2010812/pexels-photo-2010812.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "precio" : "500",
+        "cantidad" : 1
+    },
+    {
+        "nombre" : "Tapado",
+        "imagen" : "https://images.pexels.com/photos/10032500/pexels-photo-10032500.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
+        "precio" : "14000",
+        "cantidad" : 1
+    }
+]
