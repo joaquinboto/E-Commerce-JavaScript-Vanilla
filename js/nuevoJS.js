@@ -61,7 +61,8 @@ function updateCarrito (carrito) {
             <img class="imagenProductoCarrito" src="${product.imagen}" alt="">
             <strong class="nombreProductoCarrito">${product.nombre}</strong>
             <strong class="precioProducto">$${product.precio}</strong>
-            
+            <button id="btnAumentar" class="btn btn-primary">+</button>
+            <button id="btnRestar"class="btn btn-danger">-</button>
             <button class="btn btn-dark"">
                 <a class="btnCarrito" name="delete" href="">X</a>
             </button>
