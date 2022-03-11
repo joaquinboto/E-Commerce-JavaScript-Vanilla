@@ -1,10 +1,17 @@
 //DOM 
-let btnProducto = document.querySelectorAll(".btnProducto")
-let imagenProducto = document.querySelector(".imagen-producto")
-let divCarrito = document.querySelector(".offcanvas-body")
-let containerGrid = document.querySelector(".grid-container")
-let carrito = {}
-let price = document.getElementById("divTotalProducto")
+let divCarrito = document.querySelector(".offcanvas-body") //DIV PRODUCTOS CARRITO
+let containerGrid = document.querySelector(".grid-container") //DIV CONTENEDOR DE JSON
+let carrito = {} 
+let price = document.getElementById("divTotalProducto") //DIV TOTAL PRODUCTOS
+
+
+//EVENTOS
+
+divCarrito.addEventListener('click', e => {
+  btnReducir(e)
+})
+
+
 
 //------------------JSON------------------
 
@@ -14,6 +21,10 @@ const insertarProductos = () => {
 insertarProductos()
 .then(busqueda => busqueda.json())
 .then(resultado => resultado.forEach(product => {
+  if (localStorage.getItem('carrito')) {
+    carrito = JSON.parse(localStorage.getItem('carrito'));
+    updateCarrito()
+  }
   let row = document.createElement('div')
   row.classList.add('producto')
   row.innerHTML = `
@@ -23,11 +34,13 @@ insertarProductos()
   <button class="btn btn-dark"">
   <a class="btnProducto" href="">Agregar al carrito</a>
   </button>`
-  containerGrid.appendChild(row)
+  containerGrid.appendChild(row) //PINTANDO PRODUCTOS DESDE EL JSON
+
+
 
   //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
   let btnAgregar = row.querySelector(".btn")
-  btnAgregar.setAttribute('value' , product.id)
+  btnAgregar.setAttribute('data-id' , product.id)
   btnAgregar.addEventListener('click', buscarObjeto)
   })
 )
@@ -41,47 +54,84 @@ function buscarObjeto (e) {
       nombre: boton.querySelector(".nombreProducto").textContent,
       imagen: boton.querySelector(".imagenProducto").src,
       precio: Number(boton.querySelector(".precioProducto").textContent.replace('Precio: $' , '')),
-      id: boton.querySelector(".btn").value,
+      id: Number(boton.querySelector(".btn").dataset.id),
       cantidad: 1
   }
-
+  console.log(infoProduct);
+  //Comprobando si tiene las mismas propiedades
   if (carrito.hasOwnProperty(infoProduct.id)) {
-    infoProduct.cantidad = carrito[infoProduct.id].cantidad + 1
+    infoProduct.cantidad = carrito[infoProduct.id].cantidad + 1  //SI EL VALOR ES TRUE, SUMA LA CANTIDAD AL OBJETO
   }
-  carrito[infoProduct.id] = {...infoProduct}
-  updateCarrito(carrito)
+  carrito[infoProduct.id] = {...infoProduct} //CREANDO UNA COPIA DEL OBJETO 
+  updateCarrito() //BUSCANDO COPIA DEL OBJETO
 }
 
-function updateCarrito (carrito) {
-  clear()
+
+const updateCarrito = () => {
+  divCarrito.innerHTML = '' //LIMPIANDO HTML
+
+  //ITERANDO SOBRE EL OBJETO PARA PINTAR EN EL CARRITO
   Object.values(carrito).forEach(product => {
     const rowCarrito = document.createElement("div");
     rowCarrito.classList.add('productoCarrito')
     rowCarrito.innerHTML = `
+            <strong>PRODUCTOS:</strong>
             <img class="imagenProductoCarrito" src="${product.imagen}" alt="">
             <strong class="nombreProductoCarrito">${product.nombre}</strong>
             <strong class="precioProducto">$${product.precio}</strong>
-            <button id="btnAumentar" class="btn btn-primary">+</button>
-            <button id="btnRestar"class="btn btn-danger">-</button>
+            <button class="btn btn-primary btnAumentar" data-id="${product.id}">+</button>
+            <button class="btn btn-danger btnRestar" data-id= "${product.id}">-</button>
             <button class="btn btn-dark"">
                 <a class="btnCarrito" name="delete" href="">X</a>
             </button>
     `
     divCarrito.prepend(rowCarrito)
-
   })
-  
+  localStorage.setItem('carrito', JSON.stringify(carrito))
   sumarCarrito()
 }
 
-function clear() {
-  divCarrito.innerHTML = ''
-}
 
+// SUMANDO CANTIDAD Y PRECIO
 function sumarCarrito() {
-  
+  price.innerHTML = ''
+  if (Object.keys(carrito).length === 0) {
+    price.innerHTML = `<div class="row" id="divTotalProducto">
+    <p class="price">Carrito Vacio</p>
+    </div>`
+    return
+  }
+
   const cantidad = Object.values(carrito).reduce((acc, {cantidad}) => acc + cantidad ,0)
   const precio = Object.values(carrito).reduce((acc , {cantidad , precio}) => acc + cantidad * precio , 0)
   price.innerHTML = `<p class="price">Total $${precio}</p>
-  <p class="price">Cantidad de productos $${cantidad}</p>`
+  <p class="price">Cantidad de productos $${cantidad}</p>
+  <button class="btn btn-danger" id="vaciarCarrito"></button>
+  `
+  let vaciarCarrito = document.getElementById('vaciarCarrito')
+  vaciarCarrito.addEventListener('click' , () => {
+    carrito = {}
+    updateCarrito()
+  })
+
+}
+
+
+const btnReducir = e => {
+  if (e.target.classList.contains('btnAumentar')) {
+    const producto = carrito[e.target.dataset.id]
+    producto.cantidad++
+    carrito[e.target.dataset.id] = {...producto}
+  }
+
+  if (e.target.classList.contains('btnRestar')) {
+    const producto = carrito[e.target.dataset.id]
+    producto.cantidad--
+    if (producto.cantidad == 0) {
+      delete carrito[e.target.dataset.id]
+    }
+  }
+
+
+  updateCarrito()
 }
