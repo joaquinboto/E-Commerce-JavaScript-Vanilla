@@ -8,7 +8,7 @@ let btnPrueba = document.querySelector(".btnPrueba")
 //EVENTOS
 
 divCarrito.addEventListener('click', e => {
-  btnReducir(e)
+  btnAumentarRestar(e)
 })
 
 
@@ -57,30 +57,30 @@ function buscarObjeto (e) {
       id: Number(boton.querySelector(".btn").dataset.id),
       cantidad: 1
   }
-  console.log(infoProduct);
   //Comprobando si tiene las mismas propiedades
   if (carrito.hasOwnProperty(infoProduct.id)) {
     infoProduct.cantidad = carrito[infoProduct.id].cantidad + 1  //SI EL VALOR ES TRUE, SUMA LA CANTIDAD AL OBJETO
   }
-  carrito[infoProduct.id] = {...infoProduct} //CREANDO UNA COPIA DEL OBJETO 
-  updateCarrito() //BUSCANDO COPIA DEL OBJETO
+
+  carrito[infoProduct.id] = {...infoProduct} //INDEXANDO OBJETO
+
+  updateCarrito() //BUSCANDO OBJETO CARRITO
 }
 
 
 const updateCarrito = () => {
   divCarrito.innerHTML = '' //LIMPIANDO HTML
-
   //ITERANDO SOBRE EL OBJETO PARA PINTAR EN EL CARRITO
   Object.values(carrito).forEach(product => {
     const rowCarrito = document.createElement("div");
     rowCarrito.classList.add('productoCarrito')
     rowCarrito.innerHTML = `
-            <strong>PRODUCTOS:</strong>
-            <img class="imagenProductoCarrito" src="${product.imagen}" alt="">
-            <strong class="nombreProductoCarrito">${product.nombre}</strong>
-            <strong class="precioProducto">$${product.precio}</strong>
-            <button class="btn btn-primary btnAumentar" data-id="${product.id}">+</button>
-            <button class="btn btn-danger btnRestar" data-id= "${product.id}">-</button>
+    <strong>PRODUCTOS:</strong>
+    <img class="imagenProductoCarrito" src="${product.imagen}" alt="">
+    <strong class="nombreProductoCarrito">${product.nombre}</strong>
+    <strong class="precioProducto">$${product.precio}</strong>
+    <button class="btn btn-primary btnAumentar" data-id="${product.id}">+</button>
+    <button class="btn btn-danger btnRestar" data-id= "${product.id}">-</button>
     `
     divCarrito.prepend(rowCarrito)
   })
@@ -117,7 +117,7 @@ function sumarCarrito() {
 }
 
 // FUNCION AUMENTAR Y REDUCIR 
-const btnReducir = e => {
+const btnAumentarRestar = e => {
   if (e.target.classList.contains('btnAumentar')) {
     const producto = carrito[e.target.dataset.id]
     producto.cantidad++
