@@ -3,7 +3,7 @@ let divCarrito = document.querySelector(".offcanvas-body") //DIV PRODUCTOS CARRI
 let containerGrid = document.querySelector(".grid-container") //DIV CONTENEDOR DE JSON
 let carrito = {} 
 let price = document.getElementById("divTotalProducto") //DIV TOTAL PRODUCTOS
-
+let btnPrueba = document.querySelector(".btnPrueba")
 
 //EVENTOS
 
@@ -81,9 +81,6 @@ const updateCarrito = () => {
             <strong class="precioProducto">$${product.precio}</strong>
             <button class="btn btn-primary btnAumentar" data-id="${product.id}">+</button>
             <button class="btn btn-danger btnRestar" data-id= "${product.id}">-</button>
-            <button class="btn btn-dark"">
-                <a class="btnCarrito" name="delete" href="">X</a>
-            </button>
     `
     divCarrito.prepend(rowCarrito)
   })
@@ -108,6 +105,9 @@ function sumarCarrito() {
   <p class="price">Cantidad de productos $${cantidad}</p>
   <button class="btn btn-danger" id="vaciarCarrito">VACIAR CARRITO</button>
   `
+
+
+  // VACIANDO CARRITO
   let vaciarCarrito = document.getElementById('vaciarCarrito')
   vaciarCarrito.addEventListener('click' , () => {
     carrito = {}
@@ -116,7 +116,7 @@ function sumarCarrito() {
 
 }
 
-
+// FUNCION AUMENTAR Y REDUCIR 
 const btnReducir = e => {
   if (e.target.classList.contains('btnAumentar')) {
     const producto = carrito[e.target.dataset.id]
@@ -135,3 +135,7 @@ const btnReducir = e => {
 
   updateCarrito()
 }
+
+
+
+

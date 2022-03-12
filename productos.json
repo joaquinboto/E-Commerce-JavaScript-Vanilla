@@ -3,7 +3,8 @@
         "nombre" : "Conjunto",
         "imagen" : "/assets/conjuntobasico.jpeg",
         "precio" : "5000",
-        "id" : 1
+        "id" : 1,
+        "categoria" : "Destacado"
     },
     {
         "nombre" : "Zapatillas",
@@ -15,7 +16,8 @@
         "nombre" : "Saco",
         "imagen" : "/assets/saco.jpeg",
         "precio" : "1200",
-        "id" : 3
+        "id" : 3,
+        "categoria" : "Destacado"
     },
     {
         "nombre" : "Remera",
@@ -33,7 +35,8 @@
         "nombre" : "Campera",
         "imagen" : "https://images.pexels.com/photos/4922976/pexels-photo-4922976.jpeg?cs=srgb&dl=pexels-ekaterina-belinskaya-4922976.jpg&fm=jpg",
         "precio" : "3000",
-        "id" : 6
+        "id" : 6,
+        "categoria" : "Destacado"
     },
     {
         "nombre" : "Gorra",
