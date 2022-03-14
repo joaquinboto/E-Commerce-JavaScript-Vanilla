@@ -47,7 +47,7 @@ insertarProductos()
   //FUNCION BUSQUEDA
   const filtrar = () => {
     const texto = searchProduct.value.toLowerCase()
-    arreglo.forEach(product => {
+    arreglo.map(product => {
       //LOCALSTORAGE
       if (localStorage.getItem('carrito')) {
         carrito = JSON.parse(localStorage.getItem('carrito'));
@@ -56,7 +56,7 @@ insertarProductos()
       //PINTANDO PRODUCTOS DESDE EL JSON
       let nombre = product.nombre.toLowerCase()
       if (nombre.indexOf(texto) !== -1) {
-        containerGrid.innerHTML =  `
+        filtro.innerHTML =  `
         <div class= "producto">
         <img class="imagenProducto" src="${product.imagen}" alt="">
         <strong class="nombreProducto">${product.nombre}</strong>
@@ -65,16 +65,17 @@ insertarProductos()
         <a class="btnProducto" href="">Agregar al carrito</a>
         </button></div>`
         //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
-        let btnAgregar = containerGrid.querySelector(".btn")
+        let btnAgregar = filtro.querySelector(".btn")
         btnAgregar.setAttribute('data-id' , product.id)
         btnAgregar.addEventListener('click', buscarObjeto)
+        containerGrid.innerHTML = ''
       }
     })
     if (texto == '') {
-            
-            pintar()
+    filtro.innerHTML = ''
+    pintar()
     }
-        }
+  }
     searchProduct.addEventListener('keyup', filtrar)  
   })
 
