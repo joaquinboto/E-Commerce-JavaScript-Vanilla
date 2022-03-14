@@ -10,26 +10,29 @@
         "nombre" : "Zapatillas",
         "imagen" : "/assets/zapatillas.jpeg",
         "precio" : "7700",
-        "id" : 2
+        "id" : 2,
+        "categoria" : "Zapatillas"
     },
     {
         "nombre" : "Saco",
         "imagen" : "/assets/saco.jpeg",
         "precio" : "1200",
         "id" : 3,
-        "categoria" : "Destacado"
+        "categoria" : "Saco"
     },
     {
         "nombre" : "Remera",
         "imagen" : "/assets/remeraroja.webp",
         "precio" : "6050",
-        "id" : 4
+        "id" : 4,
+        "categoria" : "Remeras"
     },
     {
         "nombre" : "Jean",
         "imagen" : "https://images.pexels.com/photos/4173695/pexels-photo-4173695.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "precio" : "300",
-        "id" : 5
+        "id" : 5,
+        "categoria" : "Pantalones"
     },
     {
         "nombre" : "Campera",
@@ -42,12 +45,14 @@
         "nombre" : "Gorra",
         "imagen" : "https://images.pexels.com/photos/2010812/pexels-photo-2010812.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "precio" : "500",
-        "id" : 7
+        "id" : 7,
+        "categoria" : "Accesorios"
     },
     {
         "nombre" : "Tapado",
         "imagen" : "https://images.pexels.com/photos/10032500/pexels-photo-10032500.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260",
         "precio" : "14000",
-        "id" : 8
+        "id" : 8,
+        "categoria" : "Destacado"
     }
 ]

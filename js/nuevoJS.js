@@ -4,27 +4,33 @@ let containerGrid = document.querySelector(".grid-container") //DIV CONTENEDOR D
 let carrito = {} 
 let price = document.getElementById("divTotalProducto") //DIV TOTAL PRODUCTOS
 let btnPrueba = document.querySelector(".btnPrueba")
+let searchProduct = document.querySelector(".form-control")
+let filtro = document.querySelector(".filtro")
 
 //EVENTOS
-
 divCarrito.addEventListener('click', e => {
   btnAumentarRestar(e)
 })
-
-
 
 //------------------JSON------------------
 
 const insertarProductos = () => {
   return fetch('productos.json')
 }
+
 insertarProductos()
 .then(busqueda => busqueda.json())
-.then(resultado => resultado.forEach(product => {
+.then(resultado => {
+  let arreglo = resultado
+  arreglo.forEach(product => {
+  //LOCALSTORAGE
   if (localStorage.getItem('carrito')) {
     carrito = JSON.parse(localStorage.getItem('carrito'));
     updateCarrito()
   }
+
+
+  //PINTANDO PRODUCTOS DESDE EL JSON
   let row = document.createElement('div')
   row.classList.add('producto')
   row.innerHTML = `
@@ -34,15 +40,32 @@ insertarProductos()
   <button class="btn btn-dark"">
   <a class="btnProducto" href="">Agregar al carrito</a>
   </button>`
-  containerGrid.appendChild(row) //PINTANDO PRODUCTOS DESDE EL JSON
-
-
-
+  containerGrid.appendChild(row)
   //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
   let btnAgregar = row.querySelector(".btn")
   btnAgregar.setAttribute('data-id' , product.id)
   btnAgregar.addEventListener('click', buscarObjeto)
   })
+
+  //EVENTO BUSQUEDA
+
+  filtro.innerHTML = ''
+  searchProduct.addEventListener('keyup', () => {
+    const texto = searchProduct.value.toLowerCase()
+    console.log(texto);
+    arreglo.forEach (product => {
+    let nombre = product.nombre.toLowerCase()
+    
+    if (nombre.indexOf(texto) !== -1) {
+      filtro.innerHTML = `${product.nombre} - Precio ${product.precio}` 
+    }
+
+    }
+      )
+  })
+
+
+}
 )
 
 
@@ -64,12 +87,13 @@ function buscarObjeto (e) {
 
   carrito[infoProduct.id] = {...infoProduct} //INDEXANDO OBJETO
 
-  updateCarrito() //BUSCANDO OBJETO CARRITO
+  updateCarrito() 
 }
 
 
 const updateCarrito = () => {
   divCarrito.innerHTML = '' //LIMPIANDO HTML
+
   //ITERANDO SOBRE EL OBJETO PARA PINTAR EN EL CARRITO
   Object.values(carrito).forEach(product => {
     const rowCarrito = document.createElement("div");
@@ -84,6 +108,9 @@ const updateCarrito = () => {
     `
     divCarrito.prepend(rowCarrito)
   })
+
+
+  //LOCALSTORAGE
   localStorage.setItem('carrito', JSON.stringify(carrito))
   sumarCarrito()
 }
@@ -131,8 +158,6 @@ const btnAumentarRestar = e => {
       delete carrito[e.target.dataset.id]
     }
   }
-
-
   updateCarrito()
 }
 
