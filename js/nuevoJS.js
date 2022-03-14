@@ -23,51 +23,68 @@ insertarProductos()
 .then(resultado => {
   let arreglo = resultado
   arreglo.forEach(product => {
-  //LOCALSTORAGE
-  if (localStorage.getItem('carrito')) {
-    carrito = JSON.parse(localStorage.getItem('carrito'));
-    updateCarrito()
-  }
-  //PINTANDO PRODUCTOS DESDE EL JSON
-  let row = document.createElement('div')
-  row.classList.add('producto')
-  row.innerHTML = `
-  <img class="imagenProducto" src="${product.imagen}" alt="">
-  <strong class="nombreProducto">${product.nombre}</strong>
-  <strong class="precioProducto">Precio: $${product.precio}</strong>
-  <button class="btn btn-dark"">
-  <a class="btnProducto" href="">Agregar al carrito</a>
-  </button>`
-  containerGrid.appendChild(row)
-  //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
-  let btnAgregar = row.querySelector(".btn")
-  btnAgregar.setAttribute('data-id' , product.id)
-  btnAgregar.addEventListener('click', buscarObjeto)
+    const row = document.createElement("div");
+    row.classList.add('producto')
+    row.innerHTML = `
+            <img class="imagenProducto" src="${product.imagen}" alt="">
+            <strong class="nombreProducto">${product.nombre}</strong>
+            <strong class="precioProducto">Precio: $${product.precio}</strong>
+            <button class="btn btn-dark"">
+            <a class="btnProducto" href="">Agregar al carrito</a>
+            </button>`
+            //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
+            let btnAgregar = row.querySelector(".btn")
+            btnAgregar.setAttribute('data-id' , product.id)
+            btnAgregar.addEventListener('click', buscarObjeto)
+            containerGrid.appendChild(row)
   })
-  
+
   //EVENTO BUSQUEDA
   const filtrar = () => {
     const texto = searchProduct.value.toLowerCase()
-    arreglo.forEach (product => {
-
-      let nombre = product.nombre.toLowerCase()
-      if (nombre.indexOf(texto) !== -1) {
-        filtro.innerHTML = `
-        <div class="producto">
-        <img class="imagenProducto" src="${product.imagen}" alt="">
-        <strong class="nombreProducto">${product.nombre}</strong>
-        <strong class="precioProducto">Precio: $${product.precio}</strong>
-        <button class="btn btn-dark"">
-        <a class="btnProducto" href="">Agregar al carrito</a>
-        </button></div>`
-        //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
-        let btnAgregar = filtro.querySelector(".btn")
-        btnAgregar.setAttribute('data-id' , product.id)
-        btnAgregar.addEventListener('click', buscarObjeto)
-        containerGrid.innerHTML = ''}
-      })
+          arreglo.forEach(product => {
+            //LOCALSTORAGE
+            if (localStorage.getItem('carrito')) {
+              carrito = JSON.parse(localStorage.getItem('carrito'));
+              updateCarrito()
+            }
+            //PINTANDO PRODUCTOS DESDE EL JSON
+            let nombre = product.nombre.toLowerCase()
+            if (nombre.indexOf(texto) !== -1) {
+            containerGrid.innerHTML =  `
+            <div class= "producto">
+            <img class="imagenProducto" src="${product.imagen}" alt="">
+            <strong class="nombreProducto">${product.nombre}</strong>
+            <strong class="precioProducto">Precio: $${product.precio}</strong>
+            <button class="btn btn-dark"">
+            <a class="btnProducto" href="">Agregar al carrito</a>
+            </button></div>`
+            //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
+            let btnAgregar = containerGrid.querySelector(".btn")
+            btnAgregar.setAttribute('data-id' , product.id)
+            btnAgregar.addEventListener('click', buscarObjeto)
+            }
+          if (texto == '') {
+            arreglo.forEach(product => {
+              const row = document.createElement("div");
+              row.classList.add('producto')
+              row.innerHTML = `
+                      <img class="imagenProducto" src="${product.imagen}" alt="">
+                      <strong class="nombreProducto">${product.nombre}</strong>
+                      <strong class="precioProducto">Precio: $${product.precio}</strong>
+                      <button class="btn btn-dark"">
+                      <a class="btnProducto" href="">Agregar al carrito</a>
+                      </button>`
+                      //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
+                      let btnAgregar = row.querySelector(".btn")
+                      btnAgregar.setAttribute('data-id' , product.id)
+                      btnAgregar.addEventListener('click', buscarObjeto)
+                      containerGrid.appendChild(row)
+            })
+          }
+          
+          })
     }
-
     searchProduct.addEventListener('keyup', filtrar)
   })
 
