@@ -28,8 +28,6 @@ insertarProductos()
     carrito = JSON.parse(localStorage.getItem('carrito'));
     updateCarrito()
   }
-
-
   //PINTANDO PRODUCTOS DESDE EL JSON
   let row = document.createElement('div')
   row.classList.add('producto')
@@ -46,27 +44,32 @@ insertarProductos()
   btnAgregar.setAttribute('data-id' , product.id)
   btnAgregar.addEventListener('click', buscarObjeto)
   })
-
+  
   //EVENTO BUSQUEDA
-
-  filtro.innerHTML = ''
-  searchProduct.addEventListener('keyup', () => {
+  const filtrar = () => {
     const texto = searchProduct.value.toLowerCase()
-    console.log(texto);
     arreglo.forEach (product => {
-    let nombre = product.nombre.toLowerCase()
-    
-    if (nombre.indexOf(texto) !== -1) {
-      filtro.innerHTML = `${product.nombre} - Precio ${product.precio}` 
+
+      let nombre = product.nombre.toLowerCase()
+      if (nombre.indexOf(texto) !== -1) {
+        filtro.innerHTML = `
+        <div class="producto">
+        <img class="imagenProducto" src="${product.imagen}" alt="">
+        <strong class="nombreProducto">${product.nombre}</strong>
+        <strong class="precioProducto">Precio: $${product.precio}</strong>
+        <button class="btn btn-dark"">
+        <a class="btnProducto" href="">Agregar al carrito</a>
+        </button></div>`
+        //DECLARANDO BOTON Y ASIGNANDOLE EVENTO PARA ENVIAR INFO AL CARRITO
+        let btnAgregar = filtro.querySelector(".btn")
+        btnAgregar.setAttribute('data-id' , product.id)
+        btnAgregar.addEventListener('click', buscarObjeto)
+        containerGrid.innerHTML = ''}
+      })
     }
 
-    }
-      )
+    searchProduct.addEventListener('keyup', filtrar)
   })
-
-
-}
-)
 
 
 //FUNCIONES//
