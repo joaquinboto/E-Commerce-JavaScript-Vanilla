@@ -142,7 +142,7 @@ function sumarCarrito() {
   const precio = Object.values(carrito).reduce((acc , {cantidad , precio}) => acc + cantidad * precio , 0)
   price.innerHTML = `<div class="footerCarrito">
   <strong class="subtotalProductos">Subtotal: $${precio}</strong>
-  <strong class="price">Cantidad de productos ${cantidad}</strong>
+  <strong class="price">Cantidad de productos: ${cantidad}</strong>
   <button class="btn btn-danger" id="vaciarCarrito">Vaciar carrito</button>
   <button class="btn btn-success" id="successCompra">Comprar</button>
 </div>

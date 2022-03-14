@@ -82,7 +82,7 @@
 }
 
 #vaciarCarrito {
-    width: 100px;
+    width: 150px;
 }
 
 .filtro {
@@ -113,11 +113,14 @@
         width: 100%;
         display: flex;
         justify-content:center;
+        border-bottom: 1px solid black;
+        margin-bottom: 15px;
 
         .top {
             display: flex;
             width: 750px;
-            justify-content: space-between
+            justify-content: space-between;
+            align-items:center;
         }
     }
 
@@ -132,20 +135,25 @@
             display: flex;
             justify-content: space-between;
             align-items:center;
+            margin: 10px auto;
             width: 750px;
         }
     }
 
     #divTotalProducto{
+        margin-top: 15px;
+        border-top: 1px solid black;
         grid-row: 3/4;
         width: 100%;
         display: flex;
         justify-content: center;
 
         .footerCarrito {
+            margin: 30px auto;
             display: flex;
             justify-content: space-between;
             width: 750px;
+            align-items:center;
         }
 
     }
