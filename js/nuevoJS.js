@@ -71,8 +71,9 @@ insertarProductos()
       }
     })
     if (texto == '') {
+            
             pintar()
-          }
+    }
         }
     searchProduct.addEventListener('keyup', filtrar)  
   })
