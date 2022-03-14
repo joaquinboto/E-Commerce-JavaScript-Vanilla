@@ -1,11 +1,11 @@
 //DOM 
-let divCarrito = document.querySelector(".offcanvas-body") //DIV PRODUCTOS CARRITO
+let divCarrito = document.querySelector(".dvProductoCarrito") //DIV PRODUCTOS CARRITO
 let containerGrid = document.querySelector(".grid-container") //DIV CONTENEDOR DE JSON
 let carrito = {} 
 let price = document.getElementById("divTotalProducto") //DIV TOTAL PRODUCTOS
-let btnPrueba = document.querySelector(".btnPrueba")
 let searchProduct = document.querySelector(".form-control")
 let filtro = document.querySelector(".filtro")
+
 
 //EVENTOS
 divCarrito.addEventListener('click', e => {
@@ -23,6 +23,10 @@ insertarProductos()
 .then(resultado => {
   let arreglo = resultado
 
+  if (localStorage.getItem('carrito')) {
+    carrito = JSON.parse(localStorage.getItem('carrito'))
+    updateCarrito()
+  }
   //PINTANDO PRODUCTOS DEL JSON
   const pintar = () => {
   arreglo.forEach(product => {
@@ -47,13 +51,7 @@ insertarProductos()
   //FUNCION BUSQUEDA
   const filtrar = () => {
     const texto = searchProduct.value.toLowerCase()
-    arreglo.map(product => {
-      //LOCALSTORAGE
-      if (localStorage.getItem('carrito')) {
-        carrito = JSON.parse(localStorage.getItem('carrito'));
-        updateCarrito()
-      }
-      //PINTANDO PRODUCTOS DESDE EL JSON
+    arreglo.forEach(product => {
       let nombre = product.nombre.toLowerCase()
       if (nombre.indexOf(texto) !== -1) {
         filtro.innerHTML =  `
@@ -75,9 +73,11 @@ insertarProductos()
     filtro.innerHTML = ''
     pintar()
     }
-  }
-    searchProduct.addEventListener('keyup', filtrar)  
-  })
+}
+    //EVENTO INPUT BUSCAR
+    searchProduct.addEventListener('keyup', filtrar)
+
+})
 
 
 //FUNCIONES//
@@ -110,12 +110,13 @@ const updateCarrito = () => {
     const rowCarrito = document.createElement("div");
     rowCarrito.classList.add('productoCarrito')
     rowCarrito.innerHTML = `
-    <strong>PRODUCTOS:</strong>
     <img class="imagenProductoCarrito" src="${product.imagen}" alt="">
     <strong class="nombreProductoCarrito">${product.nombre}</strong>
     <strong class="precioProducto">$${product.precio}</strong>
     <button class="btn btn-primary btnAumentar" data-id="${product.id}">+</button>
+    <strong> ${product.cantidad}</strong>
     <button class="btn btn-danger btnRestar" data-id= "${product.id}">-</button>
+    <button class="btn btn-dark btnDelete" data-id= "${product.id}">X</button>
     `
     divCarrito.prepend(rowCarrito)
   })
@@ -131,17 +132,20 @@ const updateCarrito = () => {
 function sumarCarrito() {
   price.innerHTML = ''
   if (Object.keys(carrito).length === 0) {
-    price.innerHTML = `<div class="row" id="divTotalProducto">
-    <p class="price">Carrito Vacio</p>
+    price.innerHTML = `<div>
+    <strong class="price">Carrito Vacio</strong>
     </div>`
     return
   }
 
   const cantidad = Object.values(carrito).reduce((acc, {cantidad}) => acc + cantidad ,0)
   const precio = Object.values(carrito).reduce((acc , {cantidad , precio}) => acc + cantidad * precio , 0)
-  price.innerHTML = `<p class="price">Total $${precio}</p>
-  <p class="price">Cantidad de productos $${cantidad}</p>
-  <button class="btn btn-danger" id="vaciarCarrito">VACIAR CARRITO</button>
+  price.innerHTML = `<div class="footerCarrito">
+  <strong class="subtotalProductos">Subtotal: $${precio}</strong>
+  <strong class="price">Cantidad de productos ${cantidad}</strong>
+  <button class="btn btn-danger" id="vaciarCarrito">Vaciar carrito</button>
+  <button class="btn btn-success" id="successCompra">Comprar</button>
+</div>
   `
 
 
@@ -154,7 +158,7 @@ function sumarCarrito() {
 
 }
 
-// FUNCION AUMENTAR Y REDUCIR 
+// FUNCION AUMENTAR , REDUCIR y ELIMINAR PRODUCTOS 
 const btnAumentarRestar = e => {
   if (e.target.classList.contains('btnAumentar')) {
     const producto = carrito[e.target.dataset.id]
@@ -168,6 +172,10 @@ const btnAumentarRestar = e => {
     if (producto.cantidad == 0) {
       delete carrito[e.target.dataset.id]
     }
+  }
+
+  if (e.target.classList.contains('btnDelete')) {
+    delete carrito[e.target.dataset.id]
   }
   updateCarrito()
 }
