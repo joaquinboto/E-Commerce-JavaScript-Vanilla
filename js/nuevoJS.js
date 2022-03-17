@@ -7,7 +7,8 @@ let searchProduct = document.querySelector(".form-control")
 let filtro = document.querySelector(".filtro")
 let contadorCarrito = document.querySelector('.badge')
 let filterName = document.querySelector('#filterName')
-let filterPrice = document.querySelector('#filterPrice')
+
+
 //EVENTOS
 divCarrito.addEventListener('click', e => {
   btnAumentarRestar(e)
@@ -27,6 +28,7 @@ insertarProductos()
     carrito = JSON.parse(localStorage.getItem('carrito'))
     updateCarrito()
   }
+
   //PINTANDO PRODUCTOS DEL JSON
   const pintar = () => {
   arreglo.forEach(product => {
@@ -75,9 +77,11 @@ insertarProductos()
     }
 }
 
-    //EVENTOS 
+    //EVENTO BUSQUEDA
     searchProduct.addEventListener('keyup', filtrar)
 
+
+    //EVENTO FILTRADO POR NOMBRE
     filterName.addEventListener('click' , (e) => {
       e.preventDefault()
       arreglo.sort((a,b) => {
@@ -95,24 +99,6 @@ insertarProductos()
       containerGrid.innerHTML = ''
       pintar()
     })
-
-    filterPrice.addEventListener('click' , (e) => {
-
-      e.preventDefault()
-      arreglo.sort((a,b) => {
-        
-        if (a.precio < b.precio) {
-          return -1
-        }else if (a.precio > b.precio) {
-          return 1
-        }else {
-          return 0
-        }
-      })
-      containerGrid.innerHTML = ''
-      filtrar()
-      console.log(arreglo);
-    })
 })
 
 
@@ -127,12 +113,25 @@ function buscarObjeto (e) {
       id: Number(boton.querySelector(".btn").dataset.id),
       cantidad: 1
   }
+
   //Comprobando si tiene las mismas propiedades
   if (carrito.hasOwnProperty(infoProduct.id)) {
     infoProduct.cantidad = carrito[infoProduct.id].cantidad + 1  //SI EL VALOR ES TRUE, SUMA LA CANTIDAD AL OBJETO
   }
 
   carrito[infoProduct.id] = {...infoProduct} //INDEXANDO OBJETO
+
+
+  Toastify({
+
+    text: "Producto añadido al carrito",
+    style: {
+      background: "black",
+    },
+    gravity: 'bottom',
+    duration: 3000
+    
+    }).showToast();
 
   updateCarrito() 
 }
@@ -144,7 +143,7 @@ const updateCarrito = () => {
   //ITERANDO SOBRE EL OBJETO PARA PINTAR EN EL CARRITO
   Object.values(carrito).forEach(product => {
     const rowCarrito = document.createElement("div");
-    rowCarrito.classList.add('productoCarrito')
+    rowCarrito.classList.add('productoCarrito');
     rowCarrito.innerHTML = `
     <img class="imagenProductoCarrito" src="${product.imagen}" alt="">
     <strong class="nombreProductoCarrito">${product.nombre}</strong>
@@ -154,10 +153,14 @@ const updateCarrito = () => {
     <button class="btn btn-danger btnRestar" data-id= "${product.id}">-</button>
     <button class="btn btn-dark btnDelete" data-id= "${product.id}">X</button>
     `
-    divCarrito.prepend(rowCarrito)
+    divCarrito.prepend(rowCarrito);
+
   })
 
+  
+
   contadorCarrito.innerHTML = ''
+
   //LOCALSTORAGE
   localStorage.setItem('carrito', JSON.stringify(carrito))
   sumarCarrito()
@@ -167,6 +170,7 @@ const updateCarrito = () => {
 // SUMANDO CANTIDAD Y PRECIO
 function sumarCarrito() {
   price.innerHTML = ''
+
   if (Object.keys(carrito).length === 0) {
     price.innerHTML = `<div>
     <strong class="price">Carrito Vacio</strong>
@@ -184,17 +188,28 @@ function sumarCarrito() {
 </div>
   `
 
- 
   contadorCarrito.innerHTML = `${cantidad}`
   
-  
-
   // VACIANDO CARRITO
   let vaciarCarrito = document.getElementById('vaciarCarrito')
   vaciarCarrito.addEventListener('click' , () => {
-    carrito = {}
-    updateCarrito()
-    
+    Swal.fire({
+      title: 'Estas seguro de eliminar los productos',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Productos eliminados'
+        )
+        carrito = {}
+        updateCarrito()
+      }
+    })
+
   })
 
 }
@@ -217,6 +232,7 @@ const btnAumentarRestar = e => {
 
   if (e.target.classList.contains('btnDelete')) {
     delete carrito[e.target.dataset.id]
+    
   }
   updateCarrito()
 }
