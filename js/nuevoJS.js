@@ -5,8 +5,9 @@ let carrito = {}
 let price = document.getElementById("divTotalProducto") //DIV TOTAL PRODUCTOS
 let searchProduct = document.querySelector(".form-control")
 let filtro = document.querySelector(".filtro")
-
-
+let contadorCarrito = document.querySelector('.badge')
+let filterName = document.querySelector('#filterName')
+let filterPrice = document.querySelector('#filterPrice')
 //EVENTOS
 divCarrito.addEventListener('click', e => {
   btnAumentarRestar(e)
@@ -22,7 +23,6 @@ insertarProductos()
 .then(busqueda => busqueda.json())
 .then(resultado => {
   let arreglo = resultado
-
   if (localStorage.getItem('carrito')) {
     carrito = JSON.parse(localStorage.getItem('carrito'))
     updateCarrito()
@@ -74,9 +74,45 @@ insertarProductos()
     pintar()
     }
 }
-    //EVENTO INPUT BUSCAR
+
+    //EVENTOS 
     searchProduct.addEventListener('keyup', filtrar)
 
+    filterName.addEventListener('click' , (e) => {
+      e.preventDefault()
+      arreglo.sort((a,b) => {
+      
+        if (a.nombre < b.nombre) {
+          return -1
+        }
+
+        if (a.nombre > b.nombre) {
+          return 1
+        }
+
+        return 0
+      })
+      containerGrid.innerHTML = ''
+      pintar()
+    })
+
+    filterPrice.addEventListener('click' , (e) => {
+
+      e.preventDefault()
+      arreglo.sort((a,b) => {
+        
+        if (a.precio < b.precio) {
+          return -1
+        }else if (a.precio > b.precio) {
+          return 1
+        }else {
+          return 0
+        }
+      })
+      containerGrid.innerHTML = ''
+      filtrar()
+      console.log(arreglo);
+    })
 })
 
 
@@ -121,7 +157,7 @@ const updateCarrito = () => {
     divCarrito.prepend(rowCarrito)
   })
 
-
+  contadorCarrito.innerHTML = ''
   //LOCALSTORAGE
   localStorage.setItem('carrito', JSON.stringify(carrito))
   sumarCarrito()
@@ -148,12 +184,17 @@ function sumarCarrito() {
 </div>
   `
 
+ 
+  contadorCarrito.innerHTML = `${cantidad}`
+  
+  
 
   // VACIANDO CARRITO
   let vaciarCarrito = document.getElementById('vaciarCarrito')
   vaciarCarrito.addEventListener('click' , () => {
     carrito = {}
     updateCarrito()
+    
   })
 
 }

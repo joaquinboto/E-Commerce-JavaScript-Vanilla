@@ -83,9 +83,18 @@
           <button class="nav-link active" id="pills-home-tab" data-bs-toggle="pill" data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">Productos</button>
         </li>
         <li class="nav-item" role="presentation">
-          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Carrito</button>
+          <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Carrito <span class="badge bg-secondary"></span></button>
         </li>
       </ul>
+      <div class="dropdown d-flex justify-content-center"> 
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Ordenar por
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a id="filterName" class="dropdown-item" href="#">Nombre</a></li>
+          <li><a id="filterPrice" class="dropdown-item" href="#">Precio</a></li>
+        </ul>
+      </div>
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
           <div class="filtro">
@@ -96,6 +105,7 @@
           </div>
         </div>
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+
           <div id="dvCarritoContainer">
 
             <div class="dvCarritoHeader">
@@ -121,7 +131,7 @@
 
 
 
-
+  
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
