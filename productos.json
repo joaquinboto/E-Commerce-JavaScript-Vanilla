@@ -1,28 +1,28 @@
 [
     {
         "nombre" : "Conjunto",
-        "imagen" : "/assets/conjuntobasico.jpeg",
+        "imagen" : "./assets/conjuntobasico.jpeg",
         "precio" : "5000",
         "id" : 1,
         "categoria" : "Destacado"
     },
     {
         "nombre" : "Zapatillas",
-        "imagen" : "/assets/zapatillas.jpeg",
+        "imagen" : "./assets/zapatillas.jpeg",
         "precio" : "7700",
         "id" : 2,
         "categoria" : "Zapatillas"
     },
     {
         "nombre" : "Saco",
-        "imagen" : "/assets/saco.jpeg",
+        "imagen" : "./assets/saco.jpeg",
         "precio" : "1200",
         "id" : 3,
         "categoria" : "Saco"
     },
     {
         "nombre" : "Remera",
-        "imagen" : "/assets/remeraroja.webp",
+        "imagen" : "./assets/remeraroja.webp",
         "precio" : "6050",
         "id" : 4,
         "categoria" : "Remeras"
